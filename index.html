@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Music Manager</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080a0f;color:#f6f7fb;font-family:Arial,Helvetica,sans-serif}
+button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.auth{min-height:100vh;display:grid;place-items:center;padding:25px;background:radial-gradient(circle at 70% 20%,#24154b 0,#080a0f 45%)}
+.auth-card{width:min(430px,100%);background:#11141c;border:1px solid #242936;border-radius:20px;padding:34px;box-shadow:0 25px 80px #0008}
+.auth-logo{font-size:25px;font-weight:800;margin-bottom:28px}.auth-logo span{color:#8b6cff;font-size:34px}.auth-card h1{font-size:30px;margin:0 0 8px}.auth-card>p{color:#9299a7;font-size:14px;margin-bottom:25px}
+.field{margin:14px 0}.field label{display:block;font-size:12px;color:#aeb4c0;margin-bottom:7px}.field input{width:100%;padding:13px 14px;border-radius:9px;border:1px solid #2a2f3a;background:#0c0f15;color:#fff;outline:none}.field input:focus{border-color:#8b6cff}
+.primary{width:100%;padding:13px;border:0;border-radius:22px;background:#fff;color:#111;font-weight:800;margin-top:8px}.switch{text-align:center;color:#858c99;font-size:12px;margin-top:18px}.switch button{border:0;background:none;color:#a997ff}.error{color:#ff8e9a;font-size:12px;margin-top:10px;min-height:16px}
+.app{display:flex;min-height:100vh}.side{width:230px;background:#07080c;border-right:1px solid #20232c;padding:25px 14px;position:fixed;top:0;bottom:0}.logo{font-size:20px;font-weight:800;padding:5px 12px 32px}.logo b{color:#8b6cff;font-size:30px}.nav button{display:block;width:100%;padding:12px;border:0;border-radius:9px;background:transparent;color:#9298a6;text-align:left;font-size:14px;margin:3px 0}.nav button:hover,.nav .on{background:#171a22;color:#fff}.add{background:#fff!important;color:#111!important;text-align:center!important;font-weight:bold}.side small{display:block;color:#676d79;font-size:10px;line-height:1.5;margin:18px 12px}.account{position:absolute;bottom:18px;left:20px;right:20px;border-top:1px solid #20232c;padding-top:14px;display:flex;align-items:center;gap:9px}.avatar{width:32px;height:32px;border-radius:50%;background:#8061ff;display:grid;place-items:center;font-size:11px;font-weight:bold}.account-info{min-width:0;flex:1}.account-info b,.account-info span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.account-info b{font-size:11px}.account-info span{font-size:9px;color:#777e8b}.logout{border:0;background:none;color:#858c99}
+.content{margin-left:230px;width:calc(100% - 230px);padding-bottom:96px}.top{height:70px;display:flex;align-items:center;gap:12px;padding:0 30px;position:sticky;top:0;background:#090b10ee;backdrop-filter:blur(12px);z-index:4}.round{border:1px solid #292d36;background:#151820;color:#fff;border-radius:50%;width:34px;height:34px}.search{flex:1;max-width:520px;background:#171a22;border:1px solid #252934;border-radius:25px;padding:10px 16px;color:#aaa}.search input{border:0;outline:0;background:none;color:#fff;width:90%;font-size:14px}
+main{padding:0 30px 35px}.view{display:none}.view.active{display:block}.hero{min-height:320px;border-radius:22px;padding:42px 45px;background:linear-gradient(120deg,#191425,#10151f 60%,#241a3d);position:relative;overflow:hidden}.ey{font-size:10px;letter-spacing:2px;color:#a99bff;font-weight:bold}.hero h1{font-size:48px;line-height:1.03;margin:12px 0}.hero h1 span{color:#a99bff}.hero p{color:#9ba1ae}.start{padding:12px 19px;border:0;border-radius:22px;font-weight:bold}.disc{position:absolute;right:70px;top:30px;width:255px;height:255px;border-radius:50%;background:repeating-radial-gradient(circle,#111 0 4px,#292b35 5px 6px);display:grid;place-items:center;box-shadow:0 15px 60px #0008}.disc div{width:72px;height:72px;border-radius:50%;background:#8061ff;display:grid;place-items:center;font-size:28px}
+h2{font-size:21px;margin:32px 0 15px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:15px}.card{background:#11141b;border:1px solid #1d2129;padding:11px;border-radius:12px;cursor:pointer;position:relative}.card:hover{background:#181c25}.art{aspect-ratio:1;border-radius:8px;display:grid;place-items:center;font-size:36px;margin-bottom:11px}.card h3{font-size:14px;margin:0 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.card p{font-size:11px;color:#858c99;margin:0}.heart{position:absolute;right:17px;top:17px;border:0;border-radius:50%;background:#080a0ecc;color:#fff;width:30px;height:30px}.liked{color:#aa97ff!important}.page h1{font-size:38px;margin:34px 0 22px}.empty{text-align:center;background:#11141b;border:1px solid #222631;border-radius:14px;padding:55px;color:#8d94a2}.empty strong{display:block;color:white;font-size:18px;margin:10px}
+.player{position:fixed;bottom:0;left:0;right:0;height:96px;background:#0d1016f5;border-top:1px solid #252934;z-index:10;display:grid;grid-template-columns:1fr 1.5fr 1fr;align-items:center;padding:12px 22px;gap:20px}.song{display:flex;align-items:center;min-width:0}.mini{width:55px;height:55px;border-radius:7px;display:grid;place-items:center;flex:none}.song div+div{margin-left:11px;min-width:0}.song b,.song span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.song b{font-size:13px}.song span{font-size:11px;color:#858c99;margin-top:4px}.controls{text-align:center}.controls button{border:0;background:none;color:#aeb4c0;font-size:17px;margin:0 7px}.controls .play{background:#fff;color:#111;border-radius:50%;width:38px;height:38px}.bar{display:flex;gap:8px;align-items:center;color:#707785;font-size:10px;margin-top:7px}.bar input{flex:1}.vol{text-align:right}.vol input{width:110px}.water{position:fixed;right:20px;bottom:108px;z-index:30;color:#fff;opacity:.27;font-size:10px;letter-spacing:1px;text-transform:uppercase;pointer-events:none}
+@media(max-width:800px){.side{width:66px}.logo{font-size:0;text-align:center}.logo b{font-size:28px}.nav button{font-size:0;text-align:center}.side small,.account-info,.logout{display:none}.account{left:17px}.content{margin-left:66px;width:calc(100% - 66px)}main{padding:0 17px}.top{padding:0 17px}.hero{padding:30px;min-height:300px}.hero h1{font-size:36px}.disc{right:-40px;opacity:.3}.player{grid-template-columns:1fr 1.3fr}.vol{display:none}}
+</style>
+</head>
+<body>
+<div id="auth" class="auth">
+  <div class="auth-card">
+    <div class="auth-logo"><span>♫</span> Music Manager</div>
+    <h1 id="authTitle">Entrar</h1>
+    <p id="authSubtitle">Entre na sua conta para acessar sua biblioteca.</p>
+    <form id="authForm">
+      <div id="nameField" class="field hidden"><label>Nome</label><input id="name" autocomplete="name"></div>
+      <div class="field"><label>E-mail</label><input id="email" type="email" autocomplete="email" required></div>
+      <div class="field"><label>Senha</label><input id="password" type="password" minlength="4" autocomplete="current-password" required></div>
+      <button class="primary" id="authSubmit">Entrar</button>
+      <div class="error" id="authError"></div>
+    </form>
+    <div class="switch"><span id="switchText">Ainda não tem uma conta?</span> <button type="button" id="switchBtn">Criar conta</button></div>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+<aside class="side">
+<div class="logo"><b>♫</b> Music Manager</div>
+<div class="nav">
+<button class="on" data-v="home">⌂ &nbsp; Início</button><button data-v="search">⌕ &nbsp; Buscar</button><button data-v="library">▣ &nbsp; Biblioteca</button><button data-v="liked">♡ &nbsp; Curtidas</button><button data-v="playlists">♫ &nbsp; Playlists</button>
+<button class="add" id="addBtn">＋ Adicionar músicas</button><input id="files" type="file" accept="audio/*" multiple hidden>
+</div>
+<small>Music Manager<br>Seu streaming de música.</small>
+<div class="account"><div class="avatar" id="avatar">LB</div><div class="account-info"><b id="userName">Usuário</b><span id="userEmail"></span></div><button class="logout" id="logout">↪</button></div>
+</aside>
+<div class="content">
+<header class="top"><button class="round">‹</button><button class="round">›</button><div class="search">⌕ <input id="q" placeholder="O que você quer ouvir?"></div><button class="round" id="profileBtn">LB</button></header>
+<main>
+<section id="home" class="view active"><div class="hero"><div class="ey">MUSIC MANAGER</div><h1>Ouça o que<br><span>combina com você.</span></h1><p>Descubra, organize e ouça suas músicas em um só lugar.</p><button class="start" id="start">▶ Começar a ouvir</button><div class="disc"><div>♫</div></div></div><h2>Feito para você</h2><div id="grid" class="grid"></div></section>
+<section id="search" class="view page"><div class="ey">EXPLORAR</div><h1>Buscar</h1><div id="results" class="grid"></div></section>
+<section id="library" class="view page"><div class="ey">COLEÇÃO</div><h1>Sua biblioteca</h1><div id="lib" class="grid"></div></section>
+<section id="liked" class="view page"><div class="ey">FAVORITOS</div><h1>Músicas curtidas</h1><div id="likes" class="grid"></div></section>
+<section id="playlists" class="view page"><div class="ey">COLEÇÃO</div><h1>Playlists</h1><div class="empty"><div style="font-size:42px;color:#8061ff">♫</div><strong>Suas playlists aparecerão aqui</strong>Criação de playlists será adicionada em uma próxima etapa.</div></section>
+</main></div></div>
+<footer id="player" class="player hidden"><div class="song"><div id="mini" class="mini">♫</div><div><b id="title">Nenhuma música</b><span id="artist">Escolha uma faixa para começar</span></div><button id="like">♡</button></div><div class="controls"><div><button id="shuffle">⤨</button><button id="prev">◀</button><button id="play" class="play">▶</button><button id="next">▶</button><button id="repeat">↻</button></div><div class="bar"><span id="cur">0:00</span><input id="range" type="range" min="0" max="100" value="0"><span id="dur">0:00</span></div></div><div class="vol">🔊 <input id="volume" type="range" min="0" max="1" step=".01" value=".8"></div></footer>
+<div class="water">Duster-x Productions</div><audio id="audio"></audio>
+
+<script>
+const demo=[
+["Midnight Drive","Music Manager","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3","#35215e,#1d3155"],
+["Neon Lights","Music Manager","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3","#5b2547,#2b275d"],
+["Ocean Air","Music Manager","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3","#164d5a,#252a62"],
+["After Hours","Music Manager","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3","#55351d,#30214e"],
+["First Light","Music Manager","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3","#234b3e,#26234e"],
+["City Rain","Music Manager","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3","#26374e,#39254c"]];
+let songs=demo.map((x,i)=>({id:i+1,title:x[0],artist:x[1],src:x[2],color:"linear-gradient(135deg,"+x[3]+")"})),idx=-1,likes=JSON.parse(localStorage.getItem("mmLikes")||"[]"),sh=false,rep=false;
+const $=id=>document.getElementById(id),audio=$("audio");
+function logged(){return JSON.parse(localStorage.getItem("mmUser")||"null")}
+function enterApp(){let u=logged();if(!u)return;auth.classList.add("hidden");app.classList.remove("hidden");player.classList.remove("hidden");userName.textContent=u.name;userEmail.textContent=u.email;avatar.textContent=u.name.split(/\s+/).map(x=>x[0]).join("").slice(0,2).toUpperCase();profileBtn.textContent=avatar.textContent}
+function time(s){return isFinite(s)?Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0"):"0:00"}
+function card(s){return `<article class="card" data-id="${s.id}"><button class="heart" data-heart="${s.id}">${likes.includes(s.id)?"♥":"♡"}</button><div class="art" style="background:${s.color}">♫</div><h3>${s.title}</h3><p>${s.artist}</p></article>`}
+function render(id,list){$(id).innerHTML=list.length?list.map(card).join(""):`<div class="empty"><div style="font-size:42px;color:#8061ff">♫</div><strong>Nada por aqui ainda</strong>Adicione músicas ou tente outra busca.</div>`;$(id).querySelectorAll(".card").forEach(c=>c.onclick=e=>{if(e.target.dataset.heart)return;load(songs.findIndex(s=>s.id==c.dataset.id),true)});$(id).querySelectorAll("[data-heart]").forEach(b=>b.onclick=e=>{e.stopPropagation();toggle(+b.dataset.heart)})}
+function search(){let q=$("q").value.toLowerCase().trim();render("results",q?songs.filter(s=>(s.title+" "+s.artist).toLowerCase().includes(q)):songs)}
+function all(){render("grid",songs);render("lib",songs);render("likes",songs.filter(s=>likes.includes(s.id)));search()}
+function load(n,auto){if(!songs[n])return;idx=n;let s=songs[n];audio.src=s.src;title.textContent=s.title;artist.textContent=s.artist;mini.style.background=s.color;like.textContent=likes.includes(s.id)?"♥":"♡";like.classList.toggle("liked",likes.includes(s.id));if(auto)audio.play().catch(()=>{})}
+function toggle(id){likes=likes.includes(id)?likes.filter(x=>x!==id):[...likes,id];localStorage.setItem("mmLikes",JSON.stringify(likes));all();if(idx>=0)like.textContent=likes.includes(songs[idx].id)?"♥":"♡"}
+let mode="login";
+switchBtn.onclick=()=>{mode=mode==="login"?"register":"login";authTitle.textContent=mode==="login"?"Entrar":"Criar conta";authSubtitle.textContent=mode==="login"?"Entre na sua conta para acessar sua biblioteca.":"Crie sua conta local para começar a usar o Music Manager.";nameField.classList.toggle("hidden",mode==="login");authSubmit.textContent=mode==="login"?"Entrar":"Criar conta";switchText.textContent=mode==="login"?"Ainda não tem uma conta?":"Já tem uma conta?";switchBtn.textContent=mode==="login"?"Criar conta":"Entrar";authError.textContent=""};
+authForm.onsubmit=e=>{e.preventDefault();let email=$("email").value.trim().toLowerCase(),pass=$("password").value,name=$("name").value.trim();if(mode==="register"){if(!name){authError.textContent="Digite seu nome.";return}localStorage.setItem("mmUser",JSON.stringify({name,email,pass}));enterApp()}else{let u=logged();if(!u){authError.textContent="Nenhuma conta local encontrada. Clique em Criar conta.";return}if(u.email!==email||u.pass!==pass){authError.textContent="E-mail ou senha incorretos.";return}enterApp()}};
+logout.onclick=()=>{audio.pause();localStorage.removeItem("mmUser");app.classList.add("hidden");player.classList.add("hidden");auth.classList.remove("hidden");authError.textContent="Você saiu da conta.";mode="login";authTitle.textContent="Entrar";authSubtitle.textContent="Entre na sua conta para acessar sua biblioteca.";nameField.classList.add("hidden");authSubmit.textContent="Entrar";switchText.textContent="Ainda não tem uma conta?";switchBtn.textContent="Criar conta"};
+play.onclick=()=>{if(idx<0)load(0,true);else audio.paused?audio.play():audio.pause()};start.onclick=()=>load(0,true);next.onclick=()=>load(sh?Math.floor(Math.random()*songs.length):(idx+1)%songs.length,true);prev.onclick=()=>{if(audio.currentTime>3)audio.currentTime=0;else load((idx-1+songs.length)%songs.length,true)};like.onclick=()=>idx>=0&&toggle(songs[idx].id);shuffle.onclick=()=>{sh=!sh;shuffle.classList.toggle("liked",sh)};repeat.onclick=()=>{rep=!rep;repeat.classList.toggle("liked",rep)};volume.oninput=e=>audio.volume=e.target.value;audio.volume=.8;
+playBtnFix=()=>{};audio.onplay=()=>play.textContent="Ⅱ";audio.onpause=()=>play.textContent="▶";audio.ontimeupdate=()=>{range.value=audio.duration?audio.currentTime/audio.duration*100:0;cur.textContent=time(audio.currentTime);dur.textContent=time(audio.duration)};range.oninput=e=>audio.duration&&(audio.currentTime=e.target.value/100*audio.duration);audio.onended=()=>rep?(audio.currentTime=0,audio.play()):next.click();
+document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));$(b.dataset.v).classList.add("active");document.querySelectorAll("[data-v]").forEach(x=>x.classList.remove("on"));b.classList.add("on");if(b.dataset.v==="search")q.focus()});
+q.oninput=search;addBtn.onclick=()=>files.click();files.onchange=e=>{[...e.target.files].forEach((f,i)=>songs.push({id:Date.now()+i,title:f.name.replace(/\.[^.]+$/,""),artist:"Seu arquivo",src:URL.createObjectURL(f),color:"linear-gradient(135deg,#4a315f,#183d4a)"}));all();document.querySelector('[data-v="library"]').click()};
+if(logged())enterApp();all();
+</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
+</body></html>

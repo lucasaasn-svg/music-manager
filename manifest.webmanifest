@@ -1,0 +1,12 @@
+{
+  "name": "Music Manager",
+  "short_name": "Music Manager",
+  "description": "Music Manager — player de música.",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080a0f",
+  "theme_color": "#080a0f",
+  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
