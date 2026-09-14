@@ -1,22 +1,115 @@
-# Music Manager — GitHub Pages (V4)
+# Music Manager V5 — GitHub Pages + Supabase
 
-Esta é a mesma base visual e funcional do **Music Manager V4**, preparada para publicação no **GitHub Pages**. A mudança principal é a estrutura de hospedagem: o `index.html` continua sendo o site V4, e foram adicionados `manifest.webmanifest`, `sw.js` e `icon.svg` para funcionar melhor em dispositivos móveis e permitir instalação como PWA em navegadores compatíveis.
+Esta versão mantém a ideia visual do Music Manager V4 e adiciona:
 
-## Publicar
+- Login e cadastro reais com Supabase Auth
+- Usuários persistentes na nuvem
+- Catálogo de músicas compartilhado
+- Painel Admin
+- Upload de MP3/áudio
+- Upload de capa
+- Exclusão de músicas pelo Admin
+- Curtidas salvas por usuário
+- Player online
+- Layout responsivo para celular, tablet e PC
+- PWA/manifest
+- Marca d'água: Duster-x Productions
 
-1. Crie um repositório no GitHub, por exemplo `music-manager`.
-2. Envie `index.html`, `manifest.webmanifest`, `sw.js` e `icon.svg` para a raiz do repositório.
-3. Abra **Settings → Pages**.
-4. Em **Build and deployment**, escolha **Deploy from a branch**.
-5. Branch: `main` e pasta: `/ (root)`.
-6. Salve e aguarde o GitHub publicar.
+## 1. Criar o projeto Supabase
 
-O endereço será parecido com:
-`https://SEU-USUARIO.github.io/music-manager/`
+Crie um projeto em https://supabase.com/
 
-## Importante
+Depois abra o SQL Editor e execute TODO o arquivo:
 
-- O cadastro/login da V4 é local (localStorage), então não é uma conta online real.
-- Os arquivos de áudio adicionados pelo botão são locais ao dispositivo/navegador e não ficam armazenados no GitHub.
-- Para transformar o projeto em uma plataforma de streaming real, com contas online, playlists sincronizadas e upload permanente, será necessário um backend/banco de dados e armazenamento.
-- O projeto inclui a marca d'água **Duster-x Productions** conforme a V4.
+`supabase.sql`
+
+## 2. Criar sua conta
+
+Abra o site, clique em "Criar conta" e faça seu cadastro.
+
+Se o Supabase estiver configurado para confirmar e-mail, confirme o e-mail antes de entrar.
+
+## 3. Virar administrador
+
+No Supabase:
+
+Authentication > Users
+
+Copie o UUID do seu usuário.
+
+Depois volte ao SQL Editor e execute:
+
+update public.profiles
+set is_admin = true
+where id = 'SEU_UUID_AQUI';
+
+## 4. Colocar as chaves no site
+
+Abra `index.html` e procure:
+
+const SUPABASE_URL = "COLE_SUA_URL_SUPABASE_AQUI";
+const SUPABASE_KEY = "COLE_SUA_PUBLISHABLE_KEY_AQUI";
+
+Troque pelos dados do seu projeto.
+
+Use a chave pública/publishable/anon apropriada para aplicações no navegador.
+
+NUNCA coloque a service_role key no index.html.
+
+## 5. Mandar para o GitHub
+
+Coloque estes arquivos na raiz do seu repositório:
+
+- index.html
+- manifest.webmanifest
+- icon.svg
+- sw.js
+- .nojekyll
+- supabase.sql
+- README.md
+
+O `supabase.sql` é documentação/setup e não é executado pelo GitHub Pages.
+
+Depois:
+
+Settings > Pages
+
+Source: Deploy from a branch
+Branch: main
+Folder: /(root)
+Save
+
+Seu site ficará em:
+
+https://SEU_USUARIO.github.io/music-manager/
+
+## 6. Como adicionar uma música
+
+Depois de virar administrador:
+
+1. Entre no Music Manager.
+2. Abra "Painel Admin".
+3. Preencha título e artista.
+4. Escolha o MP3.
+5. Opcionalmente escolha uma capa.
+6. Clique em "Enviar música".
+7. A música é enviada para o Storage do Supabase.
+8. O registro é salvo no banco.
+9. Todos os usuários passam a enxergar a música no catálogo.
+
+## Observação sobre arquivos de áudio
+
+Para arquivos grandes, o Supabase recomenda upload resumível (TUS) em vez do upload padrão. Esta primeira V5 usa o upload padrão para manter o projeto simples. Para uma biblioteca grande de músicas, a próxima versão pode trocar o uploader por upload resumível.
+
+## Direitos autorais
+
+Use somente músicas que você tenha autorização/licença para distribuir e transmitir. O projeto não fornece catálogo comercial de terceiros.
+
+## Estrutura
+
+- `index.html` — aplicação inteira
+- `supabase.sql` — tabelas, RLS, buckets e políticas
+- `manifest.webmanifest` — instalação como PWA
+- `sw.js` — cache básico
+- `icon.svg` — ícone
+- `.nojekyll` — evita processamento Jekyll desnecessário
