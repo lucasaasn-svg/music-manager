@@ -118,8 +118,8 @@ h2{font-size:21px;margin:32px 0 15px}.grid{display:grid;grid-template-columns:re
    2) Execute supabase.sql no SQL Editor.
    3) Cole a URL e a Publishable/Anon Key abaixo.
    ========================================================= */
-const SUPABASE_URL = "COLE_SUA_URL_SUPABASE_AQUI";
-const SUPABASE_KEY = "COLE_SUA_PUBLISHABLE_KEY_AQUI";
+const SUPABASE_URL = "https://czqoistrpyzzafnrnwex.supabase.co";
+const SUPABASE_KEY = "sb_publishable_CYxVNzYQw0d1LCoffW8xTQ__pV_hra-";
 const configured = !SUPABASE_URL.includes("COLE_SUA_") && !SUPABASE_KEY.includes("COLE_SUA_");
 const sb = configured ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 

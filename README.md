@@ -47,8 +47,8 @@ where id = 'SEU_UUID_AQUI';
 
 Abra `index.html` e procure:
 
-const SUPABASE_URL = "COLE_SUA_URL_SUPABASE_AQUI";
-const SUPABASE_KEY = "COLE_SUA_PUBLISHABLE_KEY_AQUI";
+const SUPABASE_URL = "https://czqoistrpyzzafnrnwex.supabase.co";
+const SUPABASE_KEY = "A chave publishable já está configurada no index.html deste pacote.";
 
 Troque pelos dados do seu projeto.
 
@@ -113,3 +113,8 @@ Use somente músicas que você tenha autorização/licença para distribuir e tr
 - `sw.js` — cache básico
 - `icon.svg` — ícone
 - `.nojekyll` — evita processamento Jekyll desnecessário
+
+
+## Configuração preparada
+
+Este pacote já está configurado para o projeto Supabase `czqoistrpyzzafnrnwex`. A chave usada no navegador é a chave publishable, apropriada para uso público quando as políticas RLS estão configuradas corretamente.
